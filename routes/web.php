@@ -7,6 +7,7 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ContactUsMessageController;
 
 Route::get('/admin', function () {
     return Inertia::render('Welcome', [
@@ -30,9 +31,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/about-us', [AboutUsController::class, 'show'])->name('about-us');
 
-Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact-us');
+//Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact-us');
 
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
+
+Route::get('/contact-us', [ContactUsMessageController::class, 'create'])->name('contact.create');
+//Route::post('/contact-us', [ContactUsMessageController::class, 'store'])->name('contact.store');
 
 
 Route::middleware([

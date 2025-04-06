@@ -63,7 +63,7 @@ const switchToTeam = (team) => {
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('contact-us')" :active="route().current('contact-us')">
+                                <NavLink :href="route('contact.create')" :active="route().current('contact.create')">
                                     Contact Us
                                 </NavLink>
                             </div>
