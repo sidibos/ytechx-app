@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ContactUsMessageController;
+use App\Http\Controllers\Admin\ContactUsMessageController as AdminContactMessageController;
 
 Route::get('/admin', function () {
     return Inertia::render('Welcome', [
@@ -16,6 +17,12 @@ Route::get('/admin', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+});
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/contacts', [AdminContactMessageController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/{id}', [AdminContactMessageController::class, 'show'])->name('contacts.show');
+    Route::put('/contacts/{id}', [AdminContactMessageController::class, 'update'])->name('contacts.update');
 });
 
 Route::get('/', function () {
