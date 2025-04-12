@@ -8,9 +8,11 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
+
 defineProps({
     title: String,
-    currentPage: String
+    currentPage: String,
+    class: String,
 });
 
 const showingNavigationDropdown = ref(false);
@@ -24,14 +26,19 @@ const switchToTeam = (team) => {
 };
 </script>
 
+
 <template>
     <div>
-        <Head :title="title" :currentPage="currentPage"/>
+    
+        <Head 
+        :title="title" 
+        :currentPage="currentPage" 
+        />
 
         <Banner />
 
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="min-h-screen bg-grey-900">
+            <nav class="bg-black-900 border-b border-blue-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -39,7 +46,10 @@ const switchToTeam = (team) => {
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('home')">
-                                    <ApplicationMark class="block h-9 w-auto" />
+                                    <strong><span class="text-blue-500">YTechX</span></strong>
+                                    <br/>
+                                    <!-- <span class="text-black-50">Your Technology Partner</span> -->
+                                    <!-- <ApplicationMark class="block h-9 w-auto" /> -->
                                 </Link>
                             </div>
 
@@ -51,13 +61,13 @@ const switchToTeam = (team) => {
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('portfolio')" :active="route().current('portfolio')">
+                                <NavLink href="/#portfolio">
                                     Portfolio
                                 </NavLink>
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('about-us')" :active="route().current('about-us')">
+                                <NavLink href="/#about">
                                     About Us
                                 </NavLink>
                             </div>
@@ -68,7 +78,6 @@ const switchToTeam = (team) => {
                                 </NavLink>
                             </div>
                         </div>
-
                         
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -130,8 +139,18 @@ const switchToTeam = (team) => {
                                 </Dropdown>
                             </div>
 
+                            <div class="sm:flex sm:items-center sm:ms-6">
+                                <div class="ms-3 relative">
+                                    <div class="sm:flex" align="right">
+                                        <NavLink :href="route('login')" :active="route().current('login')">
+                                            Log in
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Settings Dropdown -->
-                            <div class="ms-3 relative">
+                            <div class="hidden ms-3 relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
@@ -219,6 +238,7 @@ const switchToTeam = (team) => {
                         </ResponsiveNavLink>
                     </div>
 
+
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="flex items-center px-4">
@@ -297,16 +317,44 @@ const switchToTeam = (team) => {
             </nav>
 
             <!-- Page Heading -->
-            <header v-if="$slots.header" class="bg-white shadow">
+            <header v-if="$slots.header" class="bg-blue-200 shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="max-w-0xl mx-auto">
                 <slot />
             </main>
+
+            <!-- Footer -->
+            <footer class="mt-auto text-center py-8 text-sm border-t text-white bg-gray-900">
+                <!-- <div class="container mx-auto columns-3 flex justify-between">
+                    <div class="flex col-4 space-x-4 mt-4">
+                        Left
+                    </div>
+                    <div class="flex col-4 space-x-4 mt-4">
+                        Middle
+                    </div>
+                    <div class="flex col-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-gray-300"><i class="fab fa-linkedin">uu</i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300"><i class="fas fa-arrow-up"></i></a>
+                    </div>
+                </div> -->
+                <div class="container mx-auto text-center">
+                    <ul class="flex justify-center space-x-4 mt-2">
+                        <li><Link href="#">Privacy Policy</Link></li>
+                        <li><Link href="#">Terms of Service</Link></li>
+                        <li><Link href="#">Contact Us</Link></li>
+                    </ul>
+                    <p>&copy; 2025 YTechX. All rights reserved. #6875F5</p>
+                </div>
+            </footer>
         </div>
     </div>
 </template>

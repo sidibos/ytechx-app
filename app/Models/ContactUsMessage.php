@@ -10,6 +10,8 @@ class ContactUsMessage extends Model
         'name', 
         'email', 
         'phone',
-        'message'
+        'message',
+        'status', 
+        'budget'
     ];
 }

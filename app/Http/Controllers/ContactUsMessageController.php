@@ -26,6 +26,8 @@ class ContactUsMessageController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'string|max:255',
+            'budget' => 'int|nullable',
+            'status' => 'string|max:255',
             'message' => 'required|string|min:10',
         ]);
 

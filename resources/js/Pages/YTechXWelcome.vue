@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppGuessLayout.vue';
 import YtechXWelcome from '@/Components/YtechXWelcome.vue';
+// import DefaultLayout from '@/Layouts/defaultLayout.vue';
 </script>
 
 <template>

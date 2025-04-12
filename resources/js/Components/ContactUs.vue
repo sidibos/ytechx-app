@@ -1,5 +1,7 @@
 <template>
     <div class="max-w-2xl mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-4">Let's Work Together</h1>
+        <p class="mb-6">We would love to hear from you! Please fill out the form below.</p>
         <form @submit.prevent="submitForm" class="space-y-4">
             <div>
                 <label>Name</label>
@@ -18,6 +20,12 @@
                 <input v-model="form.phone" type="text" class="border p-2 w-full" />
                 <p v-if="errors.phone" class="text-red-500">{{ errors.phone[0] }}</p>
             </div>
+
+            <!-- Budget Field -->
+            <div>
+                <label class="block font-medium mb-1">Budget</label>
+                <input v-model="form.budget" class="input" type="number" step="0" />
+            </div>
         
             <div>
                 <label>Message</label>
@@ -25,7 +33,9 @@
                 <p v-if="errors.message" class="text-red-500">{{ errors.message[0] }}</p>
             </div>
         
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2">Send</button>
+            <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+              Send Message
+            </button>
             <p v-if="successMessage" class="text-green-500 mt-2">{{ successMessage }}</p>
             <p v-if="$page.props.flash.success" class="text-green-600 mt-4">{{ $page.props.flash.success }}</p>
 
@@ -42,6 +52,7 @@
     name: '',
     email: '',
     phone: '',
+    budget: 0,
     message: '',
   })
   
@@ -57,7 +68,7 @@
       successMessage.value = response.data.message
   
       // Reset the form
-      form.value = { name: '', email: '', phone: '', message: '' }
+      form.value = { name: '', email: '', phone: '',budget: '',  message: '' }
     } catch (error) {
       if (error.response?.status === 422) {
         errors.value = error.response.data.errors

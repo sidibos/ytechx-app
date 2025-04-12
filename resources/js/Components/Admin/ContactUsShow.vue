@@ -20,6 +20,21 @@
           <input v-model="form.phone" class="input border p-2 w-full" type="text" />
           <p v-if="form.errors.phone" class="text-red-500 text-sm">{{ form.errors.phone }}</p>
         </div>
+
+        <!-- Status Field -->
+        <div>
+            <label class="block font-medium mb-1">Status</label>
+            <select v-model="form.status" class="input">
+                <option value="new">New</option>
+                <option value="view">Viewed</option>
+            </select>
+        </div>
+
+        <!-- Budget Field -->
+        <div>
+            <label class="block font-medium mb-1">Budget</label>
+            <input v-model="form.budget" class="input" type="number" step="0.01" />
+        </div>
   
         <div>
           <label class="block mb-1 font-medium">Message</label>
@@ -46,6 +61,8 @@
     name: props.message.name,
     email: props.message.email,
     phone: props.message.phone,
+    status: props.message.status,
+    budget: props.message.budget,
     message: props.message.message
   })
   
