@@ -8,7 +8,8 @@
             <th class="p-3">Name</th>
             <th class="p-3">Email</th>
             <th class="p-3">Phone</th>
-            <th class="p-3">Message</th>
+            <th class="p-3">Title</th>
+            <th class="p-3">Status</th>
             <th class="p-3">Actions</th>
           </tr>
         </thead>
@@ -17,7 +18,8 @@
             <td class="p-3">{{ msg.name }}</td>
             <td class="p-3">{{ msg.email }}</td>
             <td class="p-3">{{ msg.phone }}</td>
-            <td class="p-3 truncate max-w-xs">{{ msg.message }}</td>
+            <td class="p-3 truncate max-w-xs">{{ msg.title }}</td>
+            <td class="p-3">{{ msg.status }}</td>
             <td class="p-3">
               <Link :href="route('admin.contacts.show', msg.id)" class="text-blue-600 hover:underline">
                 View / Edit

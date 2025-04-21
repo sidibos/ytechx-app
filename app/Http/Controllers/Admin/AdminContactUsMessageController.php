@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContactUsMessage;
 
-class ContactUsMessageController extends Controller
+class AdminContactUsMessageController extends Controller
 {
     public function index()
     {
@@ -31,10 +31,13 @@ class ContactUsMessageController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
+            'status' => 'string|max:255',
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
             'message' => 'required|string',
+            'budget' => 'nullable|integer',
         ]);
 
         $contact = ContactUsMessage::findOrFail($id);

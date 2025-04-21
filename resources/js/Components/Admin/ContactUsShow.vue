@@ -26,7 +26,7 @@
             <label class="block font-medium mb-1">Status</label>
             <select v-model="form.status" class="input">
                 <option value="new">New</option>
-                <option value="view">Viewed</option>
+                <option value="viewed">Viewed</option>
             </select>
         </div>
 
@@ -34,6 +34,12 @@
         <div>
             <label class="block font-medium mb-1">Budget</label>
             <input v-model="form.budget" class="input" type="number" step="0.01" />
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-sm font-medium">Title</label>
+            <input v-model="form.title" type="text" class="w-full border rounded p-2" />
+            <span v-if="form.errors.title" class="text-red-500 text-sm">{{ form.errors.title }}</span>
         </div>
   
         <div>
@@ -55,9 +61,9 @@
   import { useForm } from '@inertiajs/vue3'
   
   const props = defineProps({ message: Object })
-  console.log(props.message);
   
   const form = useForm({
+    title: props.message.title,
     name: props.message.name,
     email: props.message.email,
     phone: props.message.phone,

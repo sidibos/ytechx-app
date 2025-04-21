@@ -1,32 +1,3 @@
-<script setup>
-import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
-import ApplicationMark from '@/Components/ApplicationMark.vue';
-import Banner from '@/Components/Banner.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-
-
-defineProps({
-    title: String,
-    currentPage: String,
-    class: String,
-});
-
-const showingNavigationDropdown = ref(false);
-
-const switchToTeam = (team) => {
-    router.put(route('current-team.update'), {
-        team_id: team.id,
-    }, {
-        preserveState: false,
-    });
-};
-</script>
-
-
 <template>
     <div>
     
@@ -139,7 +110,7 @@ const switchToTeam = (team) => {
                                 </Dropdown>
                             </div>
 
-                            <div class="sm:flex sm:items-center sm:ms-6">
+                            <!-- <div class="sm:flex sm:items-center sm:ms-6">
                                 <div class="ms-3 relative">
                                     <div class="sm:flex" align="right">
                                         <NavLink :href="route('login')" :active="route().current('login')">
@@ -147,7 +118,7 @@ const switchToTeam = (team) => {
                                         </NavLink>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Settings Dropdown -->
                             <div class="hidden ms-3 relative">
@@ -325,7 +296,13 @@ const switchToTeam = (team) => {
 
             <!-- Page Content -->
             <main class="max-w-0xl mx-auto">
-                <slot />
+                <div>
+                    <!-- your layout content -->
+                    <slot />
+
+                    <!-- Scroll To Top Button -->
+                    <ScrollToTop />
+                </div>
             </main>
 
             <!-- Footer -->
@@ -348,9 +325,9 @@ const switchToTeam = (team) => {
                 </div> -->
                 <div class="container mx-auto text-center">
                     <ul class="flex justify-center space-x-4 mt-2">
-                        <li><Link href="#">Privacy Policy</Link></li>
-                        <li><Link href="#">Terms of Service</Link></li>
-                        <li><Link href="#">Contact Us</Link></li>
+                        <li><Link href="/pages/privacy-policy">Privacy Policy</Link></li>
+                        <li><Link href="/pages/terms-of-service">Terms of Service</Link></li>
+                        <li><Link href="/contact-us">Contact Us</Link></li>
                     </ul>
                     <p>&copy; 2025 YTechX. All rights reserved. #6875F5</p>
                 </div>
@@ -358,3 +335,32 @@ const switchToTeam = (team) => {
         </div>
     </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import { Head, Link, router } from '@inertiajs/vue3';
+import ApplicationMark from '@/Components/ApplicationMark.vue';
+import Banner from '@/Components/Banner.vue';
+import Dropdown from '@/Components/Dropdown.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
+import NavLink from '@/Components/NavLink.vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import ScrollToTop from '@/Components/ScrollToTop.vue'
+
+
+defineProps({
+    title: String,
+    currentPage: String,
+    class: String,
+});
+
+const showingNavigationDropdown = ref(false);
+
+const switchToTeam = (team) => {
+    router.put(route('current-team.update'), {
+        team_id: team.id,
+    }, {
+        preserveState: false,
+    });
+};
+</script>

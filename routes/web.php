@@ -3,21 +3,23 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Page;
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ContactUsMessageController;
-use App\Http\Controllers\Admin\ContactUsMessageController as AdminContactMessageController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\AdminContactMessageController;
 
-Route::get('/admin', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/admin', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/contacts', [AdminContactMessageController::class, 'index'])->name('contacts.index');
@@ -54,4 +56,26 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/admin', function () {
+        return Inertia::render('Dashboard');
+    })->name('admin');
+});
+
+Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
+    Route::resource('pages', PageController::class)->except('show');
+});
+
+// Public-facing page route
+// Route::get('/pages/{slug}', function ($slug) {
+//     $page = Page::where('slug', $slug)->firstOrFail();
+//     return Inertia::render('Page/Show', ['page' => $page]);
+// });
+
+Route::get('/pages/privacy-policy', function () {
+    return Inertia::render('PrivacyPolicy');
+});
+
+Route::get('/pages/terms-of-service', function () {
+    return Inertia::render('TermsOfService');
 });

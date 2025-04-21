@@ -26,6 +26,12 @@
                 <label class="block font-medium mb-1">Budget</label>
                 <input v-model="form.budget" class="input" type="number" step="0" />
             </div>
+
+            <div class="mb-4">
+              <label class="block text-sm font-medium">Title</label>
+              <input v-model="form.title" type="text" class="w-full border rounded p-2" />
+              <span v-if="errors.title" class="text-red-500 text-sm">{{ errors.title }}</span>
+            </div>
         
             <div>
                 <label>Message</label>
@@ -49,6 +55,7 @@
   import axios from 'axios'
   
   const form = ref({
+    title: '',
     name: '',
     email: '',
     phone: '',
@@ -68,7 +75,7 @@
       successMessage.value = response.data.message
   
       // Reset the form
-      form.value = { name: '', email: '', phone: '',budget: '',  message: '' }
+      form.value = { name: '', email: '', phone: '',budget: '',  title: '', message: '' }
     } catch (error) {
       if (error.response?.status === 422) {
         errors.value = error.response.data.errors

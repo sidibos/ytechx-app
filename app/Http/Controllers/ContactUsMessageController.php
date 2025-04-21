@@ -23,6 +23,7 @@ class ContactUsMessageController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'title' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'string|max:255',
