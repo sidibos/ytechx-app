@@ -10,7 +10,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ContactUsMessageController;
 use App\Http\Controllers\Admin\PageController;
-use App\Http\Controllers\Admin\AdminContactMessageController;
+use App\Http\Controllers\Admin\AdminContactUsMessageController;
 
 // Route::get('/admin', function () {
 //     return Inertia::render('Welcome', [
@@ -22,9 +22,9 @@ use App\Http\Controllers\Admin\AdminContactMessageController;
 // });
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/contacts', [AdminContactMessageController::class, 'index'])->name('contacts.index');
-    Route::get('/contacts/{id}', [AdminContactMessageController::class, 'show'])->name('contacts.show');
-    Route::put('/contacts/{id}', [AdminContactMessageController::class, 'update'])->name('contacts.update');
+    Route::get('/contacts', [AdminContactMessageUsController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/{id}', [AdminContactMessageUsController::class, 'show'])->name('contacts.show');
+    Route::put('/contacts/{id}', [AdminContactMessageUsController::class, 'update'])->name('contacts.update');
 });
 
 Route::get('/', function () {

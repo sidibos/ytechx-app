@@ -17,10 +17,8 @@
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('home')">
-                                    <strong><span class="text-blue-500">YTechX</span></strong>
-                                    <br/>
+                                    <ApplicationMark class="block h-8 w-auto" />
                                     <!-- <span class="text-black-50">Your Technology Partner</span> -->
-                                    <!-- <ApplicationMark class="block h-9 w-auto" /> -->
                                 </Link>
                             </div>
 

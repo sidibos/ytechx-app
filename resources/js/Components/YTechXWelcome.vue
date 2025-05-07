@@ -35,9 +35,11 @@ const submit = () => {
                     <p class="text-lg mb-6">
                         Deliver your PHP/Python Projects, Effortlessly!
                     </p>
+                    <a href="/contact-us">
                     <button class="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">
                     Get Started
                     </button>
+                    </a>
                 </div>
         </section>
 
