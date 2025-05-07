@@ -22,9 +22,9 @@ use App\Http\Controllers\Admin\AdminContactUsMessageController;
 // });
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/contacts', [AdminContactMessageUsController::class, 'index'])->name('contacts.index');
-    Route::get('/contacts/{id}', [AdminContactMessageUsController::class, 'show'])->name('contacts.show');
-    Route::put('/contacts/{id}', [AdminContactMessageUsController::class, 'update'])->name('contacts.update');
+    Route::get('/contacts', [AdminContactUsMessageController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/{id}', [AdminContactUsMessageController::class, 'show'])->name('contacts.show');
+    Route::put('/contacts/{id}', [AdminContactUsMessageController::class, 'update'])->name('contacts.update');
 });
 
 Route::get('/', function () {
