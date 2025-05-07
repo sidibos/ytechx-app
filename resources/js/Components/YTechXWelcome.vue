@@ -27,7 +27,8 @@ const submit = () => {
                 <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
                 <div class="relative z-10 max-w-2xl mx-auto px-4">
-                    <h2 class="text-4xl font-bold mb-4">We Craft Digital Experiences</h2>
+                    <h1 class="text-4xl font-bold mb-4">We Are Your Tech eXperts!</h1>
+                    <h3 class="text-2xl font-bold mb-4">We Craft Digital Experiences</h3>
                     <p class="text-lg mb-6">
                         From websites to full-scale platforms, we help brands thrive in the digital world.
                     </p>
