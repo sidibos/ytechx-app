@@ -22,6 +22,14 @@ class ContactUsMessageController extends Controller
 
     public function store(Request $request)
     {
+        // Block if honeypot is filled (likely a bot)
+        if ($request->filled('honeypot')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bot detection triggered.',
+            ], 422);
+        }
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'name' => 'required|string|max:255',

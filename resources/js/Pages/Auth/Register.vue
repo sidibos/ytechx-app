@@ -13,18 +13,36 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    role: 'tech_expert',
     terms: false,
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
+  form.post(route('expert.store'), {
+    preserveScroll: true,
+    preserveState: true, // Don't reset form or redirect
+    onSuccess: () => {
+      // Optional: clear form after success
+      form.reset('name', 'email', 'password', 'password_confirmation', 'role')
+    },
+    onFinish: () => form.reset('password', 'password_confirmation'),
+  });
 };
+
+// const submit = () => {
+//     form.post(route('register'), {
+//         onFinish: () => form.reset('password', 'password_confirmation'),
+//     });
+// };
 </script>
 
 <template>
     <Head title="Register" />
+
+    <!-- Success Message -->
+    <div v-if="form.recentlySuccessful" class="bg-green-100 text-green-800 p-4 rounded mb-4">
+      Registration successful! Welcome!
+    </div>
 
     <AuthenticationCard>
         <template #logo>
@@ -57,6 +75,15 @@ const submit = () => {
                     autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium">Register As</label>
+                <select v-model="form.role" class="w-full border px-2 py-2 rounded">
+                    <option value="customer">Customer</option>
+                    <option value="tech_expert">Tech Expert</option>
+                </select>
+                <p v-if="form.errors.role" class="text-red-500 text-sm">{{ form.errors.role }}</p>
             </div>
 
             <div class="mt-4">

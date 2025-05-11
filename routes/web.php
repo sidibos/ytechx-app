@@ -11,6 +11,7 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ContactUsMessageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\AdminContactUsMessageController;
+use App\Http\Controllers\Auth\AuthRegisteredUserController;
 
 // Route::get('/admin', function () {
 //     return Inertia::render('Welcome', [
@@ -26,6 +27,23 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/contacts/{id}', [AdminContactUsMessageController::class, 'show'])->name('contacts.show');
     Route::put('/contacts/{id}', [AdminContactUsMessageController::class, 'update'])->name('contacts.update');
 });
+
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', fn () => Inertia::render('Dashboard'));
+
+//     Route::middleware('role:tech_expert')->group(function () {
+//         Route::get('/expert-panel', [ExpertController::class, 'index']);
+//     });
+
+//     // Route::middleware('role:customer')->group(function () {
+//     //     Route::get('/customer-orders', [CustomerController::class, 'orders']);
+//     // });
+
+//     Route::middleware('role:admin')->group(function () {
+//         Route::get('/admin', [AdminController::class, 'dashboard']);
+//     });
+// });
 
 Route::get('/', function () {
     return Inertia::render('YTechXWelcome', [
@@ -45,6 +63,8 @@ Route::get('/about-us', [AboutUsController::class, 'show'])->name('about-us');
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 
 Route::get('/contact-us', [ContactUsMessageController::class, 'create'])->name('contact.create');
+Route::post('/register-expert', [AuthRegisteredUserController::class, 'store'])->name('expert.store');
+//Route::get('/register', [AuthRegisteredUserController::class, 'store'])->name('register');
 //Route::post('/contact-us', [ContactUsMessageController::class, 'store'])->name('contact.store');
 
 

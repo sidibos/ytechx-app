@@ -38,6 +38,12 @@
                 <textarea v-model="form.message" class="border h-36 p-2 w-full"></textarea>
                 <p v-if="errors.message" class="text-red-500">{{ errors.message[0] }}</p>
             </div>
+
+            <!-- 👻 Honeypot field (hidden from users) -->
+            <div style="display: none;">
+              <label>Leave this field blank</label>
+              <input type="text" v-model="form.honeypot" autocomplete="off" />
+            </div>
         
             <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
               Send Message
@@ -61,6 +67,7 @@
     phone: '',
     budget: 0,
     message: '',
+    honeypot: '' // 👈 Add honeypot field
   })
   
   const errors = ref({})
@@ -75,7 +82,15 @@
       successMessage.value = response.data.message
   
       // Reset the form
-      form.value = { name: '', email: '', phone: '',budget: '',  title: '', message: '' }
+      form.value = { 
+        name: '', 
+        email: '', 
+        phone: '',
+        budget: '',  
+        title: '', 
+        message: '',
+        honeypot: '' // 👈 Add honeypot field
+      }
     } catch (error) {
       if (error.response?.status === 422) {
         errors.value = error.response.data.errors
