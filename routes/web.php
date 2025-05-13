@@ -13,15 +13,7 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\AdminContactUsMessageController;
 use App\Http\Controllers\Auth\AuthRegisteredUserController;
 use App\Http\Controllers\Admin;
-
-// Route::get('/admin', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/contacts', [AdminContactUsMessageController::class, 'index'])->name('contacts.index');
@@ -29,17 +21,21 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/contacts/{id}', [AdminContactUsMessageController::class, 'update'])->name('contacts.update');
 
     Route::resource('quotes', Admin\QuoteController::class);
-    Route::resource('projects', Admin\ProjectController::class);
+    Route::resource('projects', Admin\ProjectController::class)->names([
+        'index' => 'projects.index',
+        'create' => 'projects.create',
+        'store' => 'projects.store',
+        'show' => 'projects.show',
+        'edit' => 'projects.edit',
+        'update' => 'projects.update',
+        'destroy' => 'projects.destroy',
+    ]);
     Route::resource('contracts', Admin\ContractController::class);
     Route::resource('squads', Admin\SquadController::class);
     Route::resource('modules', Admin\ModuleController::class);
     Route::resource('tasks', Admin\TaskController::class);
 
-    Route::resource('projects', Admin\ProjectController::class);
-    Route::resource('contracts', Admin\ContractController::class);
-    Route::resource('squads', Admin\SquadController::class);
-    Route::resource('modules', Admin\ModuleController::class);
-    Route::resource('tasks', Admin\TaskController::class);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 
@@ -91,9 +87,13 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/admin', function () {
-        return Inertia::render('Dashboard');
-    })->name('admin');
+    Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+
+    // Route::get('/admin', function () {
+    //     return Inertia::render('Dashboard');
+    // })->name('admin');
 });
 
 Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
