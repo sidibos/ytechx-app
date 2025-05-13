@@ -12,6 +12,7 @@ use App\Http\Controllers\ContactUsMessageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\AdminContactUsMessageController;
 use App\Http\Controllers\Auth\AuthRegisteredUserController;
+use App\Http\Controllers\Admin;
 
 // Route::get('/admin', function () {
 //     return Inertia::render('Welcome', [
@@ -26,6 +27,19 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/contacts', [AdminContactUsMessageController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/{id}', [AdminContactUsMessageController::class, 'show'])->name('contacts.show');
     Route::put('/contacts/{id}', [AdminContactUsMessageController::class, 'update'])->name('contacts.update');
+
+    Route::resource('quotes', Admin\QuoteController::class);
+    Route::resource('projects', Admin\ProjectController::class);
+    Route::resource('contracts', Admin\ContractController::class);
+    Route::resource('squads', Admin\SquadController::class);
+    Route::resource('modules', Admin\ModuleController::class);
+    Route::resource('tasks', Admin\TaskController::class);
+
+    Route::resource('projects', Admin\ProjectController::class);
+    Route::resource('contracts', Admin\ContractController::class);
+    Route::resource('squads', Admin\SquadController::class);
+    Route::resource('modules', Admin\ModuleController::class);
+    Route::resource('tasks', Admin\TaskController::class);
 });
 
 
