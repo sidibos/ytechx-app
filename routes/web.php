@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminContactUsMessageController;
 use App\Http\Controllers\Auth\AuthRegisteredUserController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\QuoteController;
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/contacts', [AdminContactUsMessageController::class, 'index'])->name('contacts.index');
@@ -36,6 +37,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('tasks', Admin\TaskController::class);
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/quotes/create-from-message/{id}', [QuoteController::class, 'createFromMessage'])->name('quotes.createFromMessage');
 });
 
 

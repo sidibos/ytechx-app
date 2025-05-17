@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use App\Models\Quote;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -18,7 +20,10 @@ class ProjectController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Projects/Create');
+        return Inertia::render('Admin/Projects/Create', [
+            'customers' => User::where('role', 'customer')->select('id', 'name')->get(),
+            'quotes' => Quote::where('status', 'approved')->select('id')->get(),
+        ]);
     }
 
     public function store(Request $request)

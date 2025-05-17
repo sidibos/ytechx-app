@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Quote;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\ContactUsMessage;
 
 class QuoteController extends Controller
 {
@@ -13,6 +14,15 @@ class QuoteController extends Controller
     {
         return Inertia::render('Admin/Quotes/Index', [
             'quotes' => Quote::with('contactUsMessage')->latest()->get()
+        ]);
+    }
+
+    public function createFromMessage($id)
+    {
+        $message = ContactUsMessage::findOrFail($id);
+
+        return Inertia::render('Admin/Quotes/Create', [
+            'prefillMessage' => $message,
         ]);
     }
 

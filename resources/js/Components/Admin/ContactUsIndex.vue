@@ -24,6 +24,14 @@
               <Link :href="route('admin.contacts.show', msg.id)" class="text-blue-600 hover:underline">
                 View / Edit
               </Link>
+              |
+              <Link 
+              :href="`/admin/quotes/create-from-message/${msg.id}`" 
+              
+              class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded transition"
+              >
+                Create Quote
+              </Link>
             </td>
           </tr>
         </tbody>

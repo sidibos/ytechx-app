@@ -9,7 +9,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <ContactUsIndex :message="message" />
+                    <ContactUsShow :message="message" />
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
 
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import ContactUsIndex from '@/Components/Admin/ContactUsShow.vue';
+import ContactUsShow from '@/Components/Admin/ContactUsShow.vue';
 
 defineProps({
   message: Object
