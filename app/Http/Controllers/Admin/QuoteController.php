@@ -28,7 +28,13 @@ class QuoteController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Quotes/Create');
+        $messages = ContactUsMessage::select(['id', 'title', 'message'])
+            ->where('status', '!=', 'resolved')
+            ->latest()
+            ->get(); 
+
+        return Inertia::render('Admin/Quotes/Create.From.Messages')
+            ->with('prefillMessages', $messages);
     }
 
     public function store(Request $request)

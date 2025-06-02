@@ -10,7 +10,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\RegisteredUserNotification;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
  
 class AuthRegisteredUserController extends Controller
@@ -24,26 +27,27 @@ class AuthRegisteredUserController extends Controller
             'role' => ['required', 'in:customer,tech_expert'],
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-        ]);
+        try {
+            $registeredUser = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+            ]);
+    
+            $admin = User::where('role', 'admin')->first();
+            if ($admin && $registeredUser) {
+                Notification::send(
+                    $admin, 
+                    new RegisteredUserNotification($registeredUser)
+                );
+            }
+        } catch (\Throwable $th) {
+            Log::error('Registration error: ' . $th->getMessage());
+        }
 
-        //Auth::login($user);
 
-        // Return JSON response
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'User Created successfully!',
-        //     'data' => [],
-        // ]);
-
-        //Instead of redirecting, return an Inertia response
-        return Inertia::render('Auth/Register', [
-            'success' => true,
-            'message' => 'Registration successful!',
-        ]);
+        // Redirect to the login page with success message
+        return redirect()->route('register')->with('success', 'Registration successful!');
     }
 }
