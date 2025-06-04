@@ -13,10 +13,37 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\AdminContactUsMessageController;
 use App\Http\Controllers\Auth\AuthRegisteredUserController;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\MainDashboardController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\QuoteController;
+use App\Http\Controllers\Admin\CustomerDashboardController;
+use App\http\Controllers\Admin\ExpertDashboardController;
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+
+Route::get('/dashboard', MainDashboardController::class)->middleware(['auth'])->name('dashboard');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth', 'role:expert'])->prefix('expert')->name('expert.')->group(function () {
+    Route::get('/dashboard', [ExpertDashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
+    // Route::get('/contact-us', [ContactUsMessageController::class, 'create'])->name('contact.create');
+    // Route::post('/contact-us', [ContactUsMessageController::class, 'store'])->name('contact.store');
+});
+
+Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
+    Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
+    // Route::get('/contact-us', [ContactUsMessageController::class, 'create'])->name('contact.create');
+    // Route::post('/contact-us', [ContactUsMessageController::class, 'store'])->name('contact.store');
+});
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/', MainDashboardController::class)->name('admin');
+});
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/contacts', [AdminContactUsMessageController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/{id}', [AdminContactUsMessageController::class, 'show'])->name('contacts.show');
     Route::put('/contacts/{id}', [AdminContactUsMessageController::class, 'update'])->name('contacts.update');
@@ -35,8 +62,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('squads', Admin\SquadController::class);
     Route::resource('modules', Admin\ModuleController::class);
     Route::resource('tasks', Admin\TaskController::class);
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/quotes/create-from-message/{id}', [QuoteController::class, 'createFromMessage'])->name('quotes.createFromMessage');
 });
@@ -67,8 +92,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 Route::get('/about-us', [AboutUsController::class, 'show'])->name('about-us');
 
 //Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact-us');
@@ -76,7 +99,7 @@ Route::get('/about-us', [AboutUsController::class, 'show'])->name('about-us');
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 
 Route::get('/contact-us', [ContactUsMessageController::class, 'create'])->name('contact.create');
-Route::post('/register-expert', [AuthRegisteredUserController::class, 'store'])->name('expert.store');
+Route::post('/register-expert', [AuthRegisteredUserController::class, 'store'])->name('user.store');
 //Route::get('/register', [AuthRegisteredUserController::class, 'store'])->name('register');
 //Route::post('/contact-us', [ContactUsMessageController::class, 'store'])->name('contact.store');
 
@@ -86,17 +109,11 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-
-    Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-
-
-    // Route::get('/admin', function () {
+    // Route::get('/dashboard', function () {
     //     return Inertia::render('Dashboard');
-    // })->name('admin');
+    // })->name('dashboard');
+
+     //Route::get('/admin', MainDashboardController::class)->name('admin');
 });
 
 Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
