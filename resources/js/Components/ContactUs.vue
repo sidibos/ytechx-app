@@ -25,6 +25,7 @@
             <div>
                 <label class="block font-medium mb-1">Budget</label>
                 <input v-model="form.budget" class="input" type="number" step="0" />
+                <p v-if="errors.budget" class="text-red-500">{{ errors.budget[0] }}</p>
             </div>
 
             <div class="mb-4">
@@ -95,6 +96,7 @@
       if (error.response?.status === 422) {
         errors.value = error.response.data.errors
       }
+
     }
   }
   </script>

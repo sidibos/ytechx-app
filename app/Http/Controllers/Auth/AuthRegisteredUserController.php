@@ -18,36 +18,59 @@ use Illuminate\Support\Facades\Log;
  
 class AuthRegisteredUserController extends Controller
 {
+    public function create(): Response
+    {
+        return Inertia::render('Auth/Register', [
+            'roles' => ['customer', 'tech_expert'],
+        ]);
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
+        //Block if honeypot is filled (likely a bot
+        if ($request->filled('honeypot')) {
+            return response()->json([
+                'success' => false,
+                'message' => '',
+                'errors' => [
+                    'honeypot' => 'Bot detection triggered. Please try again.',
+                ]
+            ], 422);
+        }
+
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'confirmed', 'min:8'],
             'role' => ['required', 'in:customer,tech_expert'],
+            //'terms' => ['accepted'],
+        ]);
+
+        log::info('User registration attempt', $request->all());
+
+        $registeredUser = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => $validated['role'],
         ]);
 
         try {
-            $registeredUser = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => $request->role,
-            ]);
-    
             $admin = User::where('role', 'admin')->first();
             if ($admin && $registeredUser) {
                 Notification::send(
-                    $admin, 
+                    $admin,
                     new RegisteredUserNotification($registeredUser)
                 );
             }
-        } catch (\Throwable $th) {
-            Log::error('Registration error: ' . $th->getMessage());
+        } catch(\Throwable $th) {
+            Log::error('Error sending registration notification: ' . $th->getMessage());
         }
 
-
-        // Redirect to the login page with success message
-        return redirect()->route('register')->with('success', 'Registration successful!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Registration successful! Please check your email for confirmation.',
+            'data' => [],
+        ], 201);
     }
 }

@@ -1,48 +1,10 @@
-<script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-
-const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-    role: 'tech_expert',
-    terms: false,
-});
-
-const submit = () => {
-  form.post(route('expert.store'), {
-    preserveScroll: true,
-    preserveState: true, // Don't reset form or redirect
-    onSuccess: () => {
-      // Optional: clear form after success
-      form.reset('name', 'email', 'password', 'password_confirmation', 'role')
-    },
-    onFinish: () => form.reset('password', 'password_confirmation'),
-  });
-};
-
-// const submit = () => {
-//     form.post(route('register'), {
-//         onFinish: () => form.reset('password', 'password_confirmation'),
-//     });
-// };
-</script>
-
 <template>
     <Head title="Register" />
 
     <!-- Success Message -->
-    <div v-if="form.recentlySuccessful" class="bg-green-100 text-green-800 p-4 rounded mb-4">
-      Registration successful! Welcome!
-    </div>
+    <!-- <div v-if="successMessage" class="bg-green-100 text-green-800 p-4 rounded mb-4">
+        Registration successful! Welcome!
+    </div> -->
 
     <AuthenticationCard>
         <template #logo>
@@ -134,6 +96,82 @@ const submit = () => {
                     Register
                 </PrimaryButton>
             </div>
+            <div v-if="successMessage" class="mt-4 w-full text-green-900 text-lg">
+                {{ successMessage }}
+            </div>
+            <div v-if="form.errors.general_error" class="mt-4 w-full text-red-500 text-sm">
+                {{ form.errors.general_error }}
+            </div>
         </form>
     </AuthenticationCard>
 </template>
+
+<script setup>
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import AuthenticationCard from '@/Components/AuthenticationCard.vue';
+import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import Checkbox from '@/Components/Checkbox.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
+import { ref, defineProps } from 'vue';
+import axios from 'axios';
+
+const errors = ref({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    role: '',
+    terms: '',
+    general_error: ''
+});
+
+const form = ref({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    role: 'tech_expert',
+    terms: false,
+    // honeypot: '' // Uncomment if you want to use a honeypot field
+    errors: errors
+});
+
+// const errors = ref({});
+const successMessage = ref('');
+
+defineProps({
+    success: String,
+    error: Boolean,
+});
+
+const submit = async () => {
+    errors.value = {};
+    //successMessage.value = ''
+  
+    try {
+      const response = await axios.post('/api/register-expert', form.value)
+      successMessage.value = response.data.message
+        
+      // Reset the form
+      form.value = {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        role: 'tech_expert',
+        terms: false,
+        errors: errors,
+        // honeypot: '' // Uncomment if you want to use a honeypot field
+      }
+    } catch (error) {
+        if (error.response?.status === 422) {
+            errors.value = error.response.data.errors
+        } else {
+            errors.value = { general_error: 'An unexpected error occurred. Please try again.' }
+        }
+    }
+};
+</script>
