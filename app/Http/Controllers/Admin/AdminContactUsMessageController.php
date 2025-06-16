@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContactUsMessage;
+use Illuminate\Support\Facades\Gate;
 
 class AdminContactUsMessageController extends Controller
 {
@@ -22,6 +23,8 @@ class AdminContactUsMessageController extends Controller
     public function show($id)
     {
         $message = ContactUsMessage::findOrFail($id);
+
+        Gate::authorize('view', $message);
 
         return Inertia::render('Admin/ContactUs/Show', [
             'message' => $message,
