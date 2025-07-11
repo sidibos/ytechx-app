@@ -6,7 +6,7 @@ use App\Models\ContactUsMessage;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class ContactusMessagePolicy extends BasePolicy
+class ContactUsMessagePolicy extends BasePolicy
 {
     /**
      * Determine whether the user can view any models.
