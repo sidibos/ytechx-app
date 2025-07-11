@@ -21,14 +21,16 @@
             <td class="p-3 truncate max-w-xs">{{ msg.title }}</td>
             <td class="p-3">{{ msg.status }}</td>
             <td class="p-3">
-              <Link :href="route('admin.contacts.show', msg.id)" class="text-blue-600 hover:underline">
+              <Link 
+              :href="route('admin.contacts.show', msg.id)" 
+              class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded transition">
                 View / Edit
               </Link>
               |
               <Link 
               :href="`/admin/quotes/create-from-message/${msg.id}`" 
               
-              class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded transition"
+              class="inline-block bg-green-500 hover:bg-green-700 text-white font-medium px-4 py-2 rounded transition"
               >
                 Create Quote
               </Link>

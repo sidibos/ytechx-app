@@ -36,7 +36,14 @@
                   <label class="block mb-1">Notes</label>
                   <textarea v-model="form.notes" class="input border p-2 w-full"></textarea>
                 </div>
-                <button class="bg-green-600 text-white px-4 py-2 rounded" type="submit">Save</button>
+                <button 
+                class="bg-green-600 text-white px-4 py-2 rounded" 
+                type="submit">Save</button>
+
+                <button 
+                class="bg-blue-200 text-blue-800 px-4 py-2 ml-4 rounded"
+                type="button"
+                @click="$inertia.visit('/admin/quotes')">Cancel</button>
               </form>
             </div>
           </div>

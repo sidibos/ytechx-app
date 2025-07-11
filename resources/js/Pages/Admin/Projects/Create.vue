@@ -9,7 +9,6 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="max-w-xl mx-auto p-6">
           <h1 class="text-2xl font-bold mb-4">Create Project</h1>
-          
           <form @submit.prevent="submit" class="space-y-4">
             <div>
               <label class="block mb-1 text-sm">Title</label>
@@ -48,8 +47,14 @@
               </select>
               <p class="text-red-500 text-sm" v-if="form.errors.status">{{ form.errors.status }}</p>
             </div>
-
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Create Project</button>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">
+              Submit
+            </button>
+            <button 
+              type="button" 
+              class="bg-green-400 hover:bg-green-600 px-4 py-2 ml-4 rounded" 
+              @click="$inertia.visit('/admin/projects')"
+            >Cancel</button>
           </form>
         </div>
       </div>

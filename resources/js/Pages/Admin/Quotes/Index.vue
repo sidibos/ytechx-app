@@ -31,7 +31,10 @@
                     <td class="p-2">${{ quote.price_estimate }}</td>
                     <td class="p-2 capitalize">{{ quote.status }}</td>
                     <td class="p-2">
-                      <Link :href="`/admin/quotes/${quote.id}/edit`" class="text-blue-600 underline">Edit</Link>
+                      <Link 
+                      :href="`/admin/quotes/${quote.id}/edit`" 
+                      class="inline-block bg-green-500 hover:bg-green-700 text-white font-medium px-4 py-2 rounded transition"
+                      >Edit</Link>
                     </td>
                   </tr>
                 </tbody>

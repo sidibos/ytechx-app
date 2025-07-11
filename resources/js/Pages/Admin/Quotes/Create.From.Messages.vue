@@ -48,7 +48,12 @@
                     rows='4'
                     required></textarea>
                   </div>
-                  <button class="bg-green-600 text-white px-4 py-2 rounded" type="submit">Save</button>
+                  <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" type="submit">Save</button>
+                  <button 
+                    class="bg-blue-300 hover:bg-blue-400 px-4 py-2 ml-4 rounded"
+                    type="button"
+                    @click="$inertia.visit('/admin/quotes')"
+                    >Cancel</button>
                 </form>
               </div>
             </div>
