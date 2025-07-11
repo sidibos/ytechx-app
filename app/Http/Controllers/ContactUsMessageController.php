@@ -11,7 +11,7 @@ class ContactUsMessageController extends Controller
     public function index()
     {
         // Optional: if you want to list all messages in admin panel
-        $messages = ContactMessage::latest()->get();
+        $messages = ContactUsMessage::latest()->get();
         return Inertia::render('Admin/ContactUsMessages', ['messages' => $messages]);
     }
 

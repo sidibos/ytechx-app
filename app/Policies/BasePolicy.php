@@ -11,8 +11,13 @@ class BasePolicy
         return $user->role === 'admin';
     }
 
-    protected static function isExpert(User $user): bool
+    protected static function isTechExpert(User $user): bool
     {
         return $user->role === 'tech_expert';
+    }
+
+    protected static function isCustomer(User $user): bool
+    {
+        return $user->role === 'customer';
     }
 }
