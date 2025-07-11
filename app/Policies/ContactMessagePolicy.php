@@ -37,7 +37,6 @@ class ContactUsMessagePolicy extends BasePolicy
      */
     public function update(User $user, ContactUsMessage $contactUsMessage): bool
     {
-        die('You are not allowed to update this message.');
         return false;
     }
 

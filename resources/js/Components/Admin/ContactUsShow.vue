@@ -51,7 +51,12 @@
         <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
           Save Changes
         </button>
-  
+        <button 
+          type="button" 
+          class="bg-blue-400 hover:bg:blue-600 text-white px-4 py-2 ml-4 rounded hover:bg-blue-300"
+          @click="$inertia.visit('/admin/contacts')">
+          Cancel
+        </button>
         <p v-if="$page.props.flash.success" class="text-green-600 mt-4">{{ $page.props.flash.success }}</p>
       </form>
     </div>
